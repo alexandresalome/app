@@ -1,29 +1,6 @@
 <nav id="menu">
     <a class="brand" href="{{ path('homepage') }}">Brand name</a>
     <ul>
-        <li>
-            <a href="{{ path('_ui_index') }}">UI Demo</a>
-            <ul>
-                <li>
-                    <a href="{{ path('_ui_form') }}">Forms</a>
-                    <ul>
-                        <li>
-                            <a href="{{ path('_ui_form_collection') }}">Collections</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Tables</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            {% if app.session.get('dark_theme') %}
-                <a href="?_dark=0">Light mode</a>
-            {% else %}
-                <a href="?_dark=1">Dark mode</a>
-            {% endif %}
-        </li>
         {% if is_granted('ROLE_USER') %}
             <li>
                 <a href="{{ path('profile') }}">{{ app.user.username }}</a>
@@ -38,5 +15,31 @@
                 <a href="{{ path('app_login') }}">Login</a>
             </li>
         {% endif %}
+        <li>
+            <a href="{{ path('_ui_index') }}">UI Demo</a>
+            <ul>
+                <li>
+                    <a href="{{ path('_ui_button') }}">Buttons</a>
+                </li>
+                <li>
+                    <a href="{{ path('_ui_form') }}">Forms</a>
+                    <ul>
+                        <li>
+                            <a href="{{ path('_ui_form_collection') }}">Collections</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ path('_ui_table') }}">Tables</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            {% if app.session.get('dark_theme') %}
+                <a href="?_dark=0">Light mode</a>
+            {% else %}
+                <a href="?_dark=1">Dark mode</a>
+            {% endif %}
+        </li>
     </ul>
 </nav>

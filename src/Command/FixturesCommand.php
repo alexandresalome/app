@@ -11,20 +11,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class FixturesCommand extends Command
 {
     protected static $defaultName = 'app:fixtures';
     protected static $defaultDescription = 'Loads fixtures for development';
     private EntityManagerInterface $entityManager;
-    private UserPasswordEncoderInterface $passwordEncoder;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
     }
 
     protected function configure()
@@ -62,7 +62,7 @@ class FixturesCommand extends Command
 
             $user = new User();
             $user->setEmail($email);
-            $passwordEncoded = $this->passwordEncoder->encodePassword($user, $name);
+            $passwordEncoded = $this->passwordHasher->hashPassword($user, $name);
             $user->setPassword($passwordEncoded);
             $this->entityManager->persist($user);
         }

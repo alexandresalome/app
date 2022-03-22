@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1 class="mt-4 mb-4">Tables</h1>
+    <h2>Small regular tables</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Status</th>
+            <th>Last time connected</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Alice</td>
+            <td>Inactive</td>
+            <td>1 year ago</td>
+            <td><em>none</em></td>
+        </tr>
+        <tr>
+            <td>Bob</td>
+            <td>Active</td>
+            <td>Yesterday</td>
+            <td>438</td>
+        </tr>
+        <tr>
+            <td>Charlie</td>
+            <td>Active</td>
+            <td>An hour ago</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>Delphine</td>
+            <td>Active</td>
+            <td>Right now</td>
+            <td><em>none</em></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Very long list of columns</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User</th>
+            {% for day in 1..100 %}
+                <th>Day {{ day }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in ['Alice', 'Bob', 'Charlie', 'Delphine'] %}
+            <tr>
+                <th>Alice</th>
+                {% for day in 1..100 %}
+                    <td>{{ random(100) }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Very long list of rows</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>&nbsp;</th>
+            {% for user in ['Alice', 'Bob', 'Charlie', 'Delphine'] %}
+            <th>{{ user }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for day in 1..100 %}
+            <tr>
+                <th>Day {{ day }}</th>
+                {% for user in ['Alice', 'Bob', 'Charlie', 'Delphine'] %}
+                <td>{{ random(100) }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

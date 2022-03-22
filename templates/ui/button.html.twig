@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1 class="mt-4 mb-4">Buttons</h1>
+    <p>
+        <button class="btn">Default</button>
+        {% for color in ['dark-red', 'red', 'orange', 'green', 'blue', 'light-blue', 'dark-blue', 'violet', 'pink', 'brown'] %}
+        <button class="btn btn-{{ color }}">{{ color|title }}</button>
+        {% endfor %}
+    </p>
+{% endblock %}

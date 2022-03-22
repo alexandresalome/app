@@ -1,35 +1,16 @@
-{%- use "bootstrap_4_horizontal_layout.html.twig" -%}
+{% use "form_div_layout.html.twig" %}
 
-{# Copied from parent #}
-{% block form_errors -%}
-    {%- if errors|length > 0 -%}
-        <span class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
-            {%- for error in errors -%}
-                <span class="d-block">{#
-                    #}<span class="badge bg-danger text-white text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span> <span class="form-error-message">{{ error.message }}</span>{#
-                #}</span>
-            {%- endfor -%}
-        </span>
-    {%- endif -%}
-{%- endblock form_errors -%}
+{% block submit_widget %}
+    {% set attr = {class: 'btn'} %}
+    {{ parent() }}
+{% endblock %}
 
-{% block form_label -%}
-    {%- if label is same as(false) -%}
-        <div class="{{ block('form_label_class') }}"></div>
-    {%- else -%}
-        {%- if expanded is not defined or not expanded -%}
-            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-label')|trim}) -%}
-        {%- endif -%}
-        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ block('form_label_class'))|trim}) -%}
+{%- block checkbox_row %}
+    <div class="form-row">
         {% if label is not same as(false) -%}
-            {%- if compound is defined and compound -%}
-                {%- set element = 'legend' -%}
-                {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-label')|trim}) -%}
-            {%- else -%}
-                {%- set label_attr = label_attr|merge({for: id}) -%}
-            {%- endif -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
             {% if required -%}
-                {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
             {%- endif -%}
             {% if label is empty -%}
                 {%- if label_format is not empty -%}
@@ -42,6 +23,7 @@
                 {%- endif -%}
             {%- endif -%}
             <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+            {{- form_widget(form) -}}
             {%- if translation_domain is same as(false) -%}
                 {%- if label_html is same as(false) -%}
                     {{- label -}}
@@ -57,29 +39,29 @@
             {%- endif -%}
             </{{ element|default('label') }}>
         {%- endif -%}
-    {%- endif -%}
-{%- endblock form_label %}
-
-{% block form_label_class 'col-sm-2' %}
-
-{% block form_row -%}
-    {%- set row_attr = {class: 'mb-2 row'} -%}
-    {%- if compound is defined and compound -%}
-        {%- set element = 'fieldset' -%}
-    {%- endif -%}
-    {%- set widget_attr = {attr: {class: 'col-10'}} -%}
-    <{{ element|default('div') }}{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' row')|trim})} %}{{ block('attributes') }}{% endwith %}>
-    {%- set errors -%}
-        {{- form_errors(form) -}}
-    {%- endset -%}
-    {{- form_label(form) -}}
-    <div class="col-sm-10">
-        {{- form_widget(form, widget_attr) -}}
-        {{- form_help(form) -}}
-        {{- errors -}}
+        {{ form_errors(form) }}
+        {{ form_help(form) }}
     </div>
-    </{{ element|default('div') }}>
-{%- endblock form_row %}
+{% endblock %}
+
+{%- block form_row -%}
+    <div class="form-row">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+        {{ form_help(form) }}
+    </div>
+{% endblock %}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="form-errors">
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
 
 {%- block collection_row -%}
     <div data-controller="collection" class="app-collection">
@@ -88,12 +70,12 @@
 {% endblock %}
 
 {%- block todo_item_row -%}
-    <div class="app-collection-item d-flex mb-2">{#
-        #}<div class="flex-shrink-1">
+    <div class="app-collection-item">{#
+        #}<div class="widget">
             {{- form_widget(form.position) -}}
             <div class="grip"></div>{#
         #}</div>{#
-        #}<div class="flex-grow-1">
+        #}<div class="extra">
             {{- form_widget(form.title) -}}
             {{- form_errors(form.title) -}}
         </div>{#

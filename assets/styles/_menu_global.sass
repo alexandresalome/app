@@ -1,14 +1,17 @@
 @import "theme"
 
-$menu-bg: $fg
-$menu-fg: $bg
-
-@if $darkTheme
-    $menu-bg: $bg2
-    $menu-fg: $fg2
-
+$brand-color: $green
+$menu-bg: if($darkTheme, $bg, $bg2)
+$menu-fg: if($darkTheme, $fg2, $fg)
+$menu-sub-bg: if($darkTheme, $bg2, $bg)
+$menu-sub-fg: if($darkTheme, $fg2, $fg)
+$menu-highlight-bg: if($darkTheme, $bg2, $bg)
+$menu-highlight-text: if($darkTheme, $fg2, $fg)
 $menu-transition-duration: .5s
-$menu-width: 180px
+$menu-width: 15rem
+
+#content
+    margin-left: $menu-width
 
 #menu
     height: 100%
@@ -19,43 +22,57 @@ $menu-width: 180px
     left: 0
     background-color: $menu-bg
     overflow-x: hidden
-    transition: $menu-transition-duration
 
     > a.brand // Brand name
         display: block
         text-align: center
         padding: .5rem 0
-        color: $menu-fg
+        color: $brand-color
         font-weight: bold
         text-decoration: none
+        font-family: $monospace
 
-    ul, li
+    // All menus in the global menu
+    ul
         margin: 0
         padding: 0
 
     li
+        padding: .2rem
         list-style-type: none
 
     a
+        color: $linkColor
         text-decoration: none
+        display: block
 
+    // Level 1 menu
     > ul
+
+        // Level 1 entry
         > li
-            padding: .2rem
+
+            // Level 1 link
             > a
-                display: block
                 margin: 0
                 padding: .2rem .5rem
                 &:hover
-                    background-color: rgba($fg, .1)
+                    background-color: $menu-highlight-bg
+                    color: $menu-highlight-text
 
+            // Level 2
             > ul
-                background: $bg
+                background: $menu-sub-bg
                 padding-left: 1rem
+                font-size: .99rem
 
-                > li > a
-                    color: $fg
+                // Level 2 entry
+                li
+                    // Level 2 link
+                    > a
+                        color: $menu-sub-fg
 
-#content
-    margin-left: $menu-width
-    transition: $menu-transition-duration
+                    // Level 3+
+                    > ul
+                        padding: .4rem 0 .4rem .6rem
+                        font-size: .9rem

@@ -1,0 +1,44 @@
+@import "_theme"
+form > div
+    // Row
+    > div
+        display: block
+        margin-bottom: 1rem
+
+        > label
+            display: block
+            margin-bottom: .2rem
+
+    .help-text
+        margin: .3rem 0 0 0
+        font-size: .9rem
+        padding: 0
+
+    ul.form-errors
+        list-style-type: none
+        font-size: .9rem
+        color: $red
+        padding: .5rem 0
+        margin: 0
+
+input[type=text], input[type=date], input[type=color], select
+    box-sizing: border-box
+    background-color: $bg2
+    border: 1px solid $light-gray
+    padding: .2rem .5rem
+    color: $fg
+    display: block
+    width: 100%
+
+    &:focus
+        outline: 2px solid $light-blue
+
+.app-collection-item
+    display: flex
+    margin-bottom: .5rem
+
+    > .widget
+        flex-shrink: 1
+
+    > .extra
+        flex-grow: 1

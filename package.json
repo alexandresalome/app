@@ -22,7 +22,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "bootstrap": "^5.0.0-beta3",
+        "normalize.css": "^8.0.1",
         "sortablejs": "^1.13.0"
     }
 }

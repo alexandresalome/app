@@ -1,2 +1,2 @@
-import 'bootstrap/js/src/dropdown';
+import 'normalize.css';
 import './bootstrap';

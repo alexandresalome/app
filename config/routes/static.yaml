@@ -12,6 +12,20 @@ _ui_index:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
         template: 'ui/index.html.twig'
 
+_ui_button:
+    path: /_ui/button
+    methods: [GET]
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+        template: 'ui/button.html.twig'
+
+_ui_table:
+    path: /_ui/table
+    methods: [GET]
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+        template: 'ui/table.html.twig'
+
 kernel:
     resource: ../../src/Kernel.php
     type: annotation

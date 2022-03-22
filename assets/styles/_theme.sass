@@ -1,25 +1,42 @@
-@import "node_modules/bootstrap/scss/functions"
-@import "node_modules/bootstrap/scss/variables"
-@import "node_modules/bootstrap/scss/mixins"
-@import "node_modules/bootstrap/scss/helpers"
-
 $darkTheme: true !default
 
-$bg: $gray-200
-$bg2: $gray-100
-$fg: $gray-800
-$fg2: $gray-900
+$realBlack: rgb(12, 12, 12)
+$black: rgb(25, 25, 25)
+$realWhite: rgb(245, 245, 245)
+$white: rgba(230, 230, 230)
+$light-gray: rgba(150, 150, 150)
+$darkRed: #961417
+$red: #ee1d22
+$orange: #F88204
+$green: #00AB40
+$dark-green: #476B00
+$light-blue: #00A8F5
+$blue: #006A95
+$dark-blue: #2F4858
+$violet: #A25898
+$pink: #E65091
+$brown: #713433
+
+
+// Matching Gradient
+$focus: 3px solid $violet
+
+
+
+$bg: $white
+$bg2: $realWhite
+$fg: $black
+$fg2: $realBlack
 
 @if $darkTheme
-    $bg: $gray-800
-    $bg2: $gray-900
-    $fg: $gray-200
-    $fg2: $gray-100
+    $bg: $black
+    $bg2: $realBlack
+    $fg: $white
+    $fg2: $realWhite
 
+// Fonts
+$monospace: "RobotoMono NF", Roboto Monospaced, monospace
+$sansSerif: Tahoma, Helvetica, Arial, sans-serif
 
-// Bootstrap colors extended for dark theme support
-
-$body-bg: $bg
-$body-color: $fg
-
-$card-bg: $bg2
+// Component colors
+$linkColor: if($darkTheme, $light-blue, $blue)

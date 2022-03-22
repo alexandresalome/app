@@ -3,6 +3,7 @@
 namespace App\Form\Profile;
 
 use App\Entity\User;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -11,18 +12,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ChangePasswordType extends AbstractType
 {
-    private UserPasswordEncoderInterface $userPasswordEncoder;
+    private UserPasswordHasherInterface $userPasswordHasher;
 
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
     {
-        $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('old_password', PasswordType::class, [
@@ -54,19 +55,19 @@ class ChangePasswordType extends AbstractType
                     return;
                 }
 
-                if (!$this->userPasswordEncoder->isPasswordValid($user, $old)) {
+                if (!$this->userPasswordHasher->isPasswordValid($user, $old)) {
                     $form->addError(new FormError('Bad credentials'));
 
                     return;
                 }
 
-                $password = $this->userPasswordEncoder->encodePassword($user, $new);
+                $password = $this->userPasswordHasher->hashPassword($user, $new);
                 $user->setPassword($password);
             })
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
